@@ -94,4 +94,11 @@ javadoc -encoding UTF-8 -d doc -sourcepath src -subpackages musicstore @sources.
 rm sources.txt
 ```
 
+## Requirements
+At least, should be launched and compiled using a 21 version or higher of Java:
+
+```bash
+sudo apt install openjdk-21-jdk
+```
+
 ---
