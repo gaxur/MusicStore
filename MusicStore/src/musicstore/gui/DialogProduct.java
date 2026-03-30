@@ -16,7 +16,7 @@ import java.awt.*;
 public class DialogProduct extends JDialog {
 
     private boolean confirmed = false;
-    private Product result = null;
+    private Product result;
 
     private JTextField txtName, txtPrice, txtStock;
     private JComboBox<String> chType;
@@ -34,7 +34,6 @@ public class DialogProduct extends JDialog {
 
     private final int idProduct;
     private final Shop<Product> shop;
-    private final boolean isEditing;
 
     /**
      *
@@ -60,7 +59,6 @@ public class DialogProduct extends JDialog {
     public DialogProduct(JFrame parent, Shop<Product> shop, Product existence) {
         super(parent, existence == null ? "Add Product" : "Edit Product", true); // Modal dialog
         this.shop = shop;
-        this.isEditing = existence != null;
         this.idProduct = existence == null ? shop.getNewId() : existence.getId();
         this.result = existence; // Initialize result with the existing product for editing
 
