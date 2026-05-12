@@ -1,12 +1,11 @@
-package musicstore.gui;
+package main.java.musicstore.gui;
 
-import musicstore.model.*;
+import main.java.musicstore.model.*;
 
 import javax.swing.*;
 import java.awt.*;
 
 /**
- *
  * Modal dialog for adding or editing a product in the catalog
  * Displays different fields based on the selected product type
  * (Album, Instrument or Accessory)
@@ -36,7 +35,6 @@ public class DialogProduct extends JDialog {
     private final Shop<Product> shop;
 
     /**
-     *
      * Constructor for adding a new product
      * Generates a new ID from the shop reference
      *
@@ -47,7 +45,6 @@ public class DialogProduct extends JDialog {
         this(parent, shop, null);
     }
 
-
     /**
      * Constructor for editing an existing product
      * Pre-fills fields with the product's current data
@@ -57,23 +54,22 @@ public class DialogProduct extends JDialog {
      * @param existence product for editing (null for adding new)
      */
     public DialogProduct(JFrame parent, Shop<Product> shop, Product existence) {
-        super(parent, existence == null ? "Add Product" : "Edit Product", true); // Modal dialog
+        super(parent, existence == null ? "Add Product" : "Edit Product", true);
         this.shop = shop;
         this.idProduct = existence == null ? shop.getNewId() : existence.getId();
-        this.result = existence; // Initialize result with the existing product for editing
+        this.result = existence;
 
         initUI();
 
         if (existence != null) {
             fillData(existence);
-            chType.setEnabled(false); // Disable type change when editing
+            chType.setEnabled(false);
         }
 
-        pack(); // Adjust size to fit content
-        setLocationRelativeTo(parent); // Center on parent
-        setResizable(false); // Fixed size for better UX
+        pack();
+        setLocationRelativeTo(parent);
+        setResizable(false);
     }
-
 
     /**
      * Initializes the user interface components and layout
@@ -143,7 +139,6 @@ public class DialogProduct extends JDialog {
         updateSpecificPanel();
     }
 
-
     /**
      * Updates the specific details panel based on the selected product type
      */
@@ -184,9 +179,7 @@ public class DialogProduct extends JDialog {
         pack();
     }
 
-
     /**
-     *
      * Helper method to add a label and field to the specific details panel
      *
      * @param panel panel to add fields to
@@ -202,7 +195,6 @@ public class DialogProduct extends JDialog {
         panel.add(field, gbc);
     }
 
-
     /**
      * Fills the dialog fields with the data from the given product
      *
@@ -213,32 +205,28 @@ public class DialogProduct extends JDialog {
         txtPrice.setText(String.valueOf(p.getPrice()));
         txtStock.setText(String.valueOf(p.getStock()));
 
-        switch (p) {
-            case Album a -> {
-                chType.setSelectedItem("Album");
-                updateSpecificPanel();
-                txtArtist.setText(a.getArtist());
-                txtGenre.setText(a.getGenre());
-                txtYear.setText(String.valueOf(a.getYear()));
-            }
-            case Instrument i -> {
-                chType.setSelectedItem("Instrument");
-                updateSpecificPanel();
-                txtBrand.setText(i.getBrand());
-                txtType.setText(i.getType());
-                isRookie.setSelected(i.isForRookies());
-            }
-            case Accessory ac -> {
-                chType.setSelectedItem("Accessory");
-                updateSpecificPanel();
-                txtCompatibility.setText(ac.getCompatibility());
-                txtMaterial.setText(ac.getMaterial());
-            }
-            default -> {
-            }
+        if (p instanceof Album) {
+            Album a = (Album) p;
+            chType.setSelectedItem("Album");
+            updateSpecificPanel();
+            txtArtist.setText(a.getArtist());
+            txtGenre.setText(a.getGenre());
+            txtYear.setText(String.valueOf(a.getYear()));
+        } else if (p instanceof Instrument) {
+            Instrument i = (Instrument) p;
+            chType.setSelectedItem("Instrument");
+            updateSpecificPanel();
+            txtBrand.setText(i.getBrand());
+            txtType.setText(i.getType());
+            isRookie.setSelected(i.isForRookies());
+        } else if (p instanceof Accessory) {
+            Accessory ac = (Accessory) p;
+            chType.setSelectedItem("Accessory");
+            updateSpecificPanel();
+            txtCompatibility.setText(ac.getCompatibility());
+            txtMaterial.setText(ac.getMaterial());
         }
     }
-
 
     /**
      * Validates the input fields and creates or updates the product object based on the selected type
@@ -273,10 +261,8 @@ public class DialogProduct extends JDialog {
                 int year = Integer.parseInt(txtYear.getText().trim());
 
                 if (result == null) {
-                    // Creating new Album
                     result = new Album(idProduct, name, price, stock, artist, genre, year);
                 } else {
-                    // Updating existing Album using setters
                     result.setName(name);
                     result.setPrice(price);
                     result.setStock(stock);
@@ -291,10 +277,8 @@ public class DialogProduct extends JDialog {
                 boolean isPrinciple = isRookie.isSelected();
 
                 if (result == null) {
-                    // Creating new Instrument
                     result = new Instrument(idProduct, name, price, stock, brand, instrType, isPrinciple);
                 } else {
-                    // Updating existing Instrument using setters
                     result.setName(name);
                     result.setPrice(price);
                     result.setStock(stock);
@@ -308,10 +292,8 @@ public class DialogProduct extends JDialog {
                 String material = txtMaterial.getText().trim();
 
                 if (result == null) {
-                    // Creating new Accessory
                     result = new Accessory(idProduct, name, price, stock, compat, material);
                 } else {
-                    // Updating existing Accessory using setters
                     result.setName(name);
                     result.setPrice(price);
                     result.setStock(stock);
@@ -331,19 +313,22 @@ public class DialogProduct extends JDialog {
         }
     }
 
-
     /**
      * Shows whether the user confirmed the action (accept) or canceled it
      *
      * @return true if the user accepted the changes, false if they canceled
      */
-    public boolean isConfirmed() { return confirmed; }
-
+    public boolean isConfirmed() {
+        return confirmed;
+    }
 
     /**
      * Returns the product created or edited in the dialog, if the user confirmed the action
      *
      * @return resultant product if confirmed, null otherwise
      */
-    public Product getResult() { return result; }
+    public Product getResult() {
+        return result;
+    }
 }
+

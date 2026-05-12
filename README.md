@@ -11,10 +11,10 @@ Project developed for the course **Programmazione ad Oggetti** (Unimore).
 ```
 MusicStore/
 ├── src/
-│   └── musicstore/
+│   └── main.java.musicstore/
 │       ├── Main.java                    ← Main entrance point
 │       ├── model/
-│       │   ├── Product.java             ← Clase abstracta (root)
+│       │   ├── Product.java             ← Abstract class (root)
 │       │   ├── Album.java               ← Product subclass
 │       │   ├── Instrument.java          ← Product subclass
 │       │   ├── Accessory.java           ← Product subclass
@@ -26,7 +26,6 @@ MusicStore/
 │       │   └── GestorFicheros.java      ← I/O files CSV
 │       └── util/
 │           └── ProductoTableModel.java  ← Swing TableModel for JTable
-├── out/                                 ← .class files
 ├── doc/                                 ← Generated Javadoc
 ├── compilar.sh                          ← Script Linux/Mac
 ```
@@ -73,13 +72,32 @@ MusicStore/
 
 ## Compilation and execution
 
-### Linux / Mac
+### Using Maven (Recommended)
+
+#### Compile
 ```bash
-chmod u+x compilar.sh
-./compilar.sh
+cd MusicStore
+mvn clean compile
 ```
 
-### Manual
+#### Run the application
+```bash
+mvn exec:java -Dexec.mainClass="musicstore.Main"
+```
+
+#### Create executable JAR
+```bash
+mvn clean package -DskipTests
+java -jar target/musicstore-1.0.0.jar
+```
+
+### Linux / Mac (Traditional method)
+```bash
+chmod u+x compile.sh
+./compile.sh
+```
+
+### Manual compilation
 ```bash
 find src -name "*.java" > sources.txt
 javac -encoding UTF-8 -d out @sources.txt
@@ -95,10 +113,17 @@ rm sources.txt
 ```
 
 ## Requirements
-At least, should be launched and compiled using a 21 version or higher of Java:
+- Java 14 or higher
+- Maven 3.6.0 or higher
 
+Install Java 21 (optional, for latest features):
 ```bash
 sudo apt install openjdk-21-jdk
+```
+
+Install Maven:
+```bash
+sudo apt install maven
 ```
 
 ---
