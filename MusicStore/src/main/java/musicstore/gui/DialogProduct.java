@@ -12,6 +12,7 @@ import java.awt.*;
  *
  * @author Marcos Galan Carrillo
  */
+
 public class DialogProduct extends JDialog {
 
     private boolean confirmed = false;
@@ -34,6 +35,7 @@ public class DialogProduct extends JDialog {
     private final int idProduct;
     private final Shop<Product> shop;
 
+
     /**
      * Constructor for adding a new product
      * Generates a new ID from the shop reference
@@ -41,9 +43,11 @@ public class DialogProduct extends JDialog {
      * @param parent father window
      * @param shop shop reference to get new ID and validate data
      */
+
     public DialogProduct(JFrame parent, Shop<Product> shop) {
         this(parent, shop, null);
     }
+
 
     /**
      * Constructor for editing an existing product
@@ -53,6 +57,7 @@ public class DialogProduct extends JDialog {
      * @param shop      shop reference to validate data
      * @param existence product for editing (null for adding new)
      */
+
     public DialogProduct(JFrame parent, Shop<Product> shop, Product existence) {
         super(parent, existence == null ? "Add Product" : "Edit Product", true);
         this.shop = shop;
@@ -71,10 +76,12 @@ public class DialogProduct extends JDialog {
         setResizable(false);
     }
 
+
     /**
      * Initializes the user interface components and layout
      * Sets up event listeners for type selection and buttons
      */
+
     private void initUI() {
         setLayout(new BorderLayout(10, 10));
         JPanel panelPrincipal = new JPanel(new GridBagLayout());
@@ -139,9 +146,11 @@ public class DialogProduct extends JDialog {
         updateSpecificPanel();
     }
 
+
     /**
      * Updates the specific details panel based on the selected product type
      */
+
     private void updateSpecificPanel() {
         panelSpecific.removeAll();
         String type = (String) chType.getSelectedItem();
@@ -179,6 +188,7 @@ public class DialogProduct extends JDialog {
         pack();
     }
 
+
     /**
      * Helper method to add a label and field to the specific details panel
      *
@@ -188,6 +198,7 @@ public class DialogProduct extends JDialog {
      * @param tag label text for the field
      * @param field the input component (e.g., JTextField) to add
      */
+
     private void addField(JPanel panel, GridBagConstraints gbc, int row, String tag, JComponent field) {
         gbc.gridx = 0; gbc.gridy = row; gbc.fill = GridBagConstraints.NONE;
         panel.add(new JLabel(tag), gbc);
@@ -195,11 +206,13 @@ public class DialogProduct extends JDialog {
         panel.add(field, gbc);
     }
 
+
     /**
      * Fills the dialog fields with the data from the given product
      *
      * @param p product whose data will be displayed for editing
      */
+
     private void fillData(Product p) {
         txtName.setText(p.getName());
         txtPrice.setText(String.valueOf(p.getPrice()));
@@ -228,11 +241,13 @@ public class DialogProduct extends JDialog {
         }
     }
 
+
     /**
      * Validates the input fields and creates or updates the product object based on the selected type
      * Uses setters when editing an existing product, creates new object when adding
      * Validates that no product with the same name and type already exists
      */
+
     private void accept() {
         try {
             String name = txtName.getText().trim();
@@ -313,20 +328,24 @@ public class DialogProduct extends JDialog {
         }
     }
 
+
     /**
      * Shows whether the user confirmed the action (accept) or canceled it
      *
      * @return true if the user accepted the changes, false if they canceled
      */
+
     public boolean isConfirmed() {
         return confirmed;
     }
+
 
     /**
      * Returns the product created or edited in the dialog, if the user confirmed the action
      *
      * @return resultant product if confirmed, null otherwise
      */
+
     public Product getResult() {
         return result;
     }

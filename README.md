@@ -27,7 +27,7 @@ MusicStore/
 │       └── util/
 │           └── ProductoTableModel.java  ← Swing TableModel for JTable
 ├── doc/                                 ← Generated Javadoc
-├── compilar.sh                          ← Script Linux/Mac
+├── compile.sh                          ← Script Linux/Mac
 ```
 
 ---
